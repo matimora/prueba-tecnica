@@ -49,54 +49,54 @@ class HomeController extends Controller
         if(!($request->user()->hasRole('admin'))){
              abort(403,'permission dennied');
         }
-
-
-        $client = new Client(env('MARVEL_PRIVATE_KEY'),env('MARVEL_PUBLIC_KEY'));
-        $id=(int)$request->input('id');
-        $response = $client->get('characters', (int)$request->input('id'));
-        $attributionText = $response->getDataWrapper()->getAttributionText();
-        $character = $response->getDataWrapper()->getData()->getResults()[0];
-        $name=$character->getName();
-        $image_url= $character->getThumbnail()->path;
-        $type=$request->input('type');
-        if ($type == 'eventos') {
-            $data = $character->getEvents()->getItems();
-            $content = count($character->getEvents()->getItems());
-            $title='Eventos';
-            return view('home', compact(
-                                'data',
-                              'image_url',
-                                         'name',
-                                         'content',
-                                         'id',
-                                         'title'
-                             ));
-        }
-        else if ($type == 'series'){
-            $data = $character->getSeries()->getItems();
-            $content = count($character->getSeries()->getItems());
-            $title='Series';
-            return view('home', compact(
-                                'data',
-                              'image_url',
-                                         'name',
-                                         'content',
-                                         'id',
-                                         'title'
-                              ));
-        }
-        else if($type == 'historias'){
-            $data = $character->getStories()->getItems();
-            $content = count($character->getStories()->getItems());
-            $title='Historias';
-            return view('home', compact(
-                                'data',
-                              'image_url',
-                                         'name',
-                                         'content',
-                                         'id',
-                                         'title'
-                              ));
+        else{
+            $client = new Client(env('MARVEL_PRIVATE_KEY'),env('MARVEL_PUBLIC_KEY'));
+            $id=(int)$request->input('id');
+            $response = $client->get('characters', (int)$request->input('id'));
+            $attributionText = $response->getDataWrapper()->getAttributionText();
+            $character = $response->getDataWrapper()->getData()->getResults()[0];
+            $name=$character->getName();
+            $image_url= $character->getThumbnail()->path;
+            $type=$request->input('type');
+            if ($type == 'eventos') {
+                $data = $character->getEvents()->getItems();
+                $content = count($character->getEvents()->getItems());
+                $title='Eventos';
+                return view('home', compact(
+                                    'data',
+                                  'image_url',
+                                             'name',
+                                             'content',
+                                             'id',
+                                             'title'
+                                 ));
+            }
+            else if ($type == 'series'){
+                $data = $character->getSeries()->getItems();
+                $content = count($character->getSeries()->getItems());
+                $title='Series';
+                return view('home', compact(
+                                    'data',
+                                  'image_url',
+                                             'name',
+                                             'content',
+                                             'id',
+                                             'title'
+                                  ));
+            }
+            else if($type == 'historias') {
+                $data = $character->getStories()->getItems();
+                $content = count($character->getStories()->getItems());
+                $title = 'Historias';
+                return view('home', compact(
+                    'data',
+                    'image_url',
+                    'name',
+                    'content',
+                    'id',
+                    'title'
+                ));
+            }
         }
     }
     public function delete(Request $request)
@@ -112,25 +112,26 @@ class HomeController extends Controller
         if(($request->user()->hasRole('remove'))){
             abort(403,'permission dennied');
         }
-        $client = new Client(env('MARVEL_PRIVATE_KEY'),env('MARVEL_PUBLIC_KEY'));
-        $id= (int)$request->input('id');
-        $response = $client->get('characters', $id);
-        $attributionText = $response->getDataWrapper()->getAttributionText();
-        $character = $response->getDataWrapper()->getData()->getResults()[0];
-        $name=$character->getName();
-        $image_url= $character->getThumbnail()->path;
-        $data = $character->getComics()->getItems();
-        $title='Comics';
-        $content=count($character->getComics()->getItems());
-        return view('home',compact(
-                            'data',
-                          'image_url',
-                                     'name',
-                                     'content',
-                                     'id',
-                                     'title'
-                          ));
-
+        else {
+            $client = new Client(env('MARVEL_PRIVATE_KEY'), env('MARVEL_PUBLIC_KEY'));
+            $id = (int)$request->input('id');
+            $response = $client->get('characters', $id);
+            $attributionText = $response->getDataWrapper()->getAttributionText();
+            $character = $response->getDataWrapper()->getData()->getResults()[0];
+            $name = $character->getName();
+            $image_url = $character->getThumbnail()->path;
+            $data = $character->getComics()->getItems();
+            $title = 'Comics';
+            $content = count($character->getComics()->getItems());
+            return view('home', compact(
+                'data',
+                'image_url',
+                'name',
+                'content',
+                'id',
+                'title'
+            ));
+        }
     }
 
 
