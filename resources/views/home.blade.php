@@ -6,9 +6,6 @@
 
 <body class="w3-content" style="max-width:1200px">
 
-
-
-
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -27,13 +24,13 @@
         </p>
     </header>
 
-    <!-- Image header -->
+    <!-- Count item -->
 
     <div class="w3-container w3-text-grey" >
         <p>{{$content}} items</p>
     </div>
 
-    <!-- Product grid -->
+    <!-- Card grid -->
 
     <div class="row">
         @foreach($data as $d)
@@ -50,20 +47,7 @@
             </div>
         @endforeach
 
-    <!-- Subscribe section -->
-
-
-
-    <!-- End page content -->
 </div>
-
-<!-- Newsletter Modal -->
-
-
-<script>
-
-</script>
-
 </body>
 </html>
 @endsection
